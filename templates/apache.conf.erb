@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+  ServerName <%= domain %>
+  DocumentRoot <%= deploy_to %>/current/public
+  RailsEnv <%= stage %>
+  AllowEncodedSlashes on
+  RewriteEngine On
+  RewriteRule ^/$ /system/cache/index.html [QSA]
+  RewriteRule ^([^.]+)$ /system/cache/$1.html [QSA]
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ /system/maintenance.html [L]
+</VirtualHost>
