@@ -5,7 +5,7 @@ package :git, :provides => :scm do
   requires :git_dependencies
   
   verify do
-    has_file '/usr/local/bin/git'
+    has_executable 'git'
   end
 end
 
