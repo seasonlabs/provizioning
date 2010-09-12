@@ -1,6 +1,9 @@
 package :rvm do
   description "Ruby Version Manager"
-  run "bash < <( curl -L http://bit.ly/rvm-install-system-wide )"
+
+  installer do
+    post "bash < <( curl -L http://bit.ly/rvm-install-system-wide )"
+  end
   
   verify do 
     has_executable "rvm"
