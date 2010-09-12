@@ -23,22 +23,3 @@ package :nginx, :provides => :webserver do
     has_file "/etc/init.d/nginx"
   end
 end
-
-package :passenger, :provides => :appserver do
-  description 'Phusion Passenger (mod_rails)'
-  version '2.2.10'
-  binaries = %w(passenger-config passenger-install-nginx-module passenger-install-apache2-module passenger-make-enterprisey passenger-memory-stats passenger-spawn-server passenger-status passenger-stress-test)
-  
-  gem 'passenger', :version => version do    
-    # Install nginx and the module
-    binaries.each {|bin| post :install, "ln -s #{REE_PATH}/bin/#{bin} /usr/local/bin/#{bin}"}
-    post :install, "sudo passenger-install-nginx-module --auto --auto-download --prefix=/usr/local/nginx"
-  end
-  
-  requires :ruby_enterprise
-  
-  verify do
-    has_gem "passenger", version
-    binaries.each {|bin| has_symlink "/usr/local/bin/#{bin}", "#{REE_PATH}/bin/#{bin}" }
-  end
-end
