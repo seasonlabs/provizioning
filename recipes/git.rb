@@ -1,6 +1,6 @@
 package :git, :provides => :scm do
   description 'Git Distributed Version Control'
-  version '1.7.1'
+  version '1.7.2.3'
   source "http://kernel.org/pub/software/scm/git/git-#{version}.tar.gz"
   requires :git_dependencies
   
