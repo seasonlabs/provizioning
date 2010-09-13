@@ -1,1 +1,3 @@
-Sprinkle based recipes for server provisioning
+Provizioning is a server provisioning tool and a repository of recipes to set-up different type of servers in an automated way.
+
+It's based on Sprinkle and Capistrano
