@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require "fileutils"
+
+folder = "."
+
+`capify #{folder}`
+
+FileUtils.mkdir_p("#{folder}/config/deploy")
+FileUtils.mkdir_p("#{folder}/config/server")
+FileUtils.mkdir_p("#{folder}/config/server/monit")
+
+FileUtils.cp("#{File.dirname(__FILE__)}/../lib/templates/sprinkle.rb", "#{folder}/config/server/policy.rb")
+FileUtils.cp("#{File.dirname(__FILE__)}/../lib/templates/maintenance.html", "#{folder}/config/server/maintenance.html")
+
+puts "[Server configuration created]"
+puts "[Modify it to configure you server connection details]"
