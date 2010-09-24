@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
     s.summary = 'Server provisioning tool based on Sprinkle'
     s.description = 'Server provisioning tools, recipes and templates based on Sprinkle'
     
-    s.author = 'Victor Castell'
+    s.authors = ['season', 'Victor Castell']
     s.email = 'victorcoder@gmail.com'
     s.homepage = 'http://github.com/seasonlabs/provizioning'
     s.licenses = 'MIT'
@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
     s.bindir             = 'bin'
     s.executables        = ['provizion']
     s.default_executable = 'provizion'
+    s.add_dependency 'sprinkle', '~> 0.3.1'
 end
