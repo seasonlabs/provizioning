@@ -3,15 +3,16 @@
 require "fileutils"
 
 folder = "."
+folder = ARGV.first if !ARGV.first.nil?
+
+FileUtils.mkdir_p("#{folder}")
 
 `capify #{folder}`
 
 FileUtils.mkdir_p("#{folder}/config/deploy")
 FileUtils.mkdir_p("#{folder}/config/server")
-FileUtils.mkdir_p("#{folder}/config/server/monit")
 
-FileUtils.cp("#{File.dirname(__FILE__)}/../lib/templates/sprinkle.rb", "#{folder}/config/server/policy.rb")
-FileUtils.cp("#{File.dirname(__FILE__)}/../lib/templates/maintenance.html", "#{folder}/config/server/maintenance.html")
+FileUtils.cp("#{File.dirname(__FILE__)}/../lib/policies/#{ARGV[1]}.rb", "#{folder}/policy.rb")
 
 puts "[Server configuration created]"
 puts "[Modify it to configure you server connection details]"

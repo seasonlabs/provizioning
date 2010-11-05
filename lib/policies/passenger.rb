@@ -2,12 +2,12 @@
 require "provizioning/provizioning"
 
 policy :passenger_stack, :roles => :app do
-  requires :webserver         # Apache
-  requires :database          # MySQL, SQLite
+  requires :webserver        # Apache
+  requires :database         # MySQL, SQLite
   
-  requires :scm               # Git, SVN
-  requires :ruby              # Ruby Enterprise
-  requires :appserver         # passenger
+  requires :scm              # Git, SVN
+  requires :ruby             # Ruby Enterprise
+  requires :appserver        # passenger
   requires :sudo_user        # special rails user with sudo rights
   requires :imagemagick      # image magick
 end
