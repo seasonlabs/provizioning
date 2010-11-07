@@ -46,9 +46,6 @@ FileUtils.mkdir_p("#{path}")
 
 `capify #{path}`
 
-FileUtils.mkdir_p("#{path}/config/deploy")
-FileUtils.mkdir_p("#{path}/config/server")
-
 FileUtils.cp("#{File.dirname(__FILE__)}/../lib/policies/#{options[:template]}.rb", "#{path}/policy.rb")
 
 puts "[Server configuration created]"

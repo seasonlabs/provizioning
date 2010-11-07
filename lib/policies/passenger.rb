@@ -2,6 +2,12 @@
 require "provizioning"
 
 policy :passenger_stack, :roles => :app do
+  requires :ubuntu_sources
+  requires :build_essential
+  requires :vim
+  requires :git
+  requires :curl
+  
   requires :webserver        # Apache
   requires :database         # MySQL, SQLite
   
@@ -18,9 +24,8 @@ deployment do
     begin
       recipes 'Capfile'
     rescue LoadError
-      recipes 'config/deploy'
+      recipes 'deploy'
     end
-    recipes 'config/server/config.rb'
   end
  
   # source based package installer defaults
@@ -29,4 +34,12 @@ deployment do
     archives '/usr/local/sources'
     builds   '/usr/local/build'
   end
+end
+
+# Depend on a specific version of sprinkle 
+begin
+  gem 'sprinkle', ">= 0.3.1" 
+rescue Gem::LoadError
+  puts "sprinkle 0.3.1 required.\n Run: `sudo gem install sprinkle`"
+  exit
 end
