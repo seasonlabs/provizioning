@@ -1,18 +1,55 @@
 #!/usr/bin/env ruby
 
-require "fileutils"
+require 'fileutils'
+require 'optparse'
 
-folder = "."
-folder = ARGV.first if !ARGV.first.nil?
+path = "."
+path = ARGV.first if !ARGV.first.nil?
 
-FileUtils.mkdir_p("#{folder}")
+options = {}
+MANDATORY_OPTIONS = [:template]
 
-`capify #{folder}`
+ARGV.each do |arg|
+  ENV[$1] = $2 if arg =~ /^(\w+)=(.*)$/
+end
 
-FileUtils.mkdir_p("#{folder}/config/deploy")
-FileUtils.mkdir_p("#{folder}/config/server")
+parser = OptionParser.new do |opts|
+  opts.banner = <<BANNER
+Provizion
+=========
 
-FileUtils.cp("#{File.dirname(__FILE__)}/../lib/policies/#{ARGV[1]}.rb", "#{folder}/policy.rb")
+http://github.com/seasonlabs/provizion
+
+Provizioning is a server automation tool that lets you setup a server in an automated fashion without installing 
+anything in the remote server before loading configuration. 
+
+Usage
+=====
+
+$> #{File.basename($0)} PATH [options]
+
+Templates are:
+BANNER
+  opts.separator ""
+  opts.on("-t", "--template TEMPLATE", String, 
+          "Server template: lamp, rails") { |options[:template]| }
+  opts.on("-h", "--help",
+          "Show this help message.") { puts opts; exit }
+  opts.parse!(ARGV)
+
+  if MANDATORY_OPTIONS && MANDATORY_OPTIONS.find { |option| options[option.to_sym].nil? }
+    puts opts; exit
+  end
+end
+
+FileUtils.mkdir_p("#{path}")
+
+`capify #{path}`
+
+FileUtils.mkdir_p("#{path}/config/deploy")
+FileUtils.mkdir_p("#{path}/config/server")
+
+FileUtils.cp("#{File.dirname(__FILE__)}/../lib/policies/#{options[:template]}.rb", "#{path}/policy.rb")
 
 puts "[Server configuration created]"
 puts "[Modify it to configure you server connection details]"

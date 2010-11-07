@@ -1,5 +1,5 @@
 # Require our stack
-require "provizioning/provizioning"
+require "provizioning"
 
 policy :passenger_stack, :roles => :app do
   requires :webserver        # Apache
