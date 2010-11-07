@@ -14,7 +14,6 @@ policy :passenger_stack, :roles => :app do
   requires :scm              # Git, SVN
   requires :ruby             # Ruby Enterprise
   requires :appserver        # passenger
-  requires :sudo_user        # special rails user with sudo rights
   requires :imagemagick      # image magick
 end
 

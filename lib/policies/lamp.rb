@@ -13,9 +13,6 @@ policy :passenger_stack, :roles => :app do
   
   requires :scm              # Git, SVN
   requires :php              # PHP 
-  requires :apache           # passenger
-  requires :sudo_user        # special rails user with sudo rights
-  requires :imagemagick      # image magick
 end
 
 deployment do
