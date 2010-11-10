@@ -1,15 +1,13 @@
 package :rvm do
   description "Ruby Version Manager"
   
-  apt "vim" do
-    pre :install, "bash < <( curl -L http://bit.ly/rvm-install-system-wide )"
+  runner "bash < <( curl -L http://bit.ly/rvm-install-system-wide )"
+  
+  verify do 
+    has_executable "rvm"
   end
   
-  #verify do 
-    #has_executable "rvm"
-  #end
-  
-  requires :rvm_ree
+  #requires :rvm_ree
 end
 
 package :rvm_ree do
