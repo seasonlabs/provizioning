@@ -3,11 +3,11 @@
 #############################################################
 
 ###### Ubuntu Main Repos
-deb http://es.archive.ubuntu.com/ubuntu/ lucid main restricted universe multiverse 
-deb-src http://es.archive.ubuntu.com/ubuntu/ lucid main 
+deb http://archive.ubuntu.com/ubuntu/ lucid main restricted universe multiverse 
+deb-src http://archive.ubuntu.com/ubuntu/ lucid main 
 
 ###### Ubuntu Update Repos
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-security main restricted universe multiverse 
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-updates main restricted universe multiverse 
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-proposed main restricted universe multiverse 
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-backports main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ lucid-security main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ lucid-updates main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ lucid-proposed main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ lucid-backports main restricted universe multiverse
