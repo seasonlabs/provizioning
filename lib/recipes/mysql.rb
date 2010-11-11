@@ -2,7 +2,7 @@ package :mysql, :provides => :database do
   description 'MySQL Database'
   apt %w( mysql-server mysql-client libmysqlclient-dev ) do
     post :install do
-      transfer '../templates/my.cnf', '/etc/mysql/'
+      transfer "#{File.dirname(__FILE__)}/../templates/my.cnf", '/etc/mysql/'
     end
   end
   
