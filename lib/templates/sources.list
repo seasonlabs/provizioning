@@ -7,7 +7,7 @@ deb http://es.archive.ubuntu.com/ubuntu/ lucid main restricted universe multiver
 deb-src http://es.archive.ubuntu.com/ubuntu/ lucid main 
 
 ###### Ubuntu Update Repos
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-security main restricted universe multiverse 
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-updates main restricted universe multiverse 
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-proposed main restricted universe multiverse 
-deb http://es.archive.ubuntu.com/ubuntu/ lucid-backports main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ lucid-security main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ lucid-updates main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ lucid-proposed main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ lucid-backports main restricted universe multiverse
