@@ -1,8 +1,7 @@
 package :passenger_gem do
   description 'Phusion Passenger (aka mod_rails)'
-  version '2.2.15'
+  version '3.0'
   gem 'passenger'
-  requires :ruby_enterprise
 
   verify do
     has_gem 'passenger'

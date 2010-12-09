@@ -10,7 +10,7 @@ begin
     gem.email = "victorcoder@gmail.com"
     gem.homepage = "http://github.com/seasonlabs/provizioning"
     gem.authors = ['season', 'Victor Castell']
-    gem.version = '0.1.1'
+    gem.version = '0.1.2'
     gem.files = Dir['lib/**/*']
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
