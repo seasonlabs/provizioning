@@ -35,7 +35,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc 'Bootstrap puppet'
     task :bootstrap do
       with_puppet_user do
-        run "wget --no-check-certificate -q -O - http://github.com/seasonlabs/provizioning/raw/master/bootstrap/bootstrap.sh | sh"
+        run "wget -q -O - https://raw.github.com/seasonlabs/provizioning/master/bootstrap/bootstrap.sh | sh"
       end
     end
 
