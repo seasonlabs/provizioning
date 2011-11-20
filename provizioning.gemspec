@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/season/version', __FILE__)
+require File.expand_path('../lib/provizioning/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Victor Castell"]
@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "provizioning"
   gem.require_paths = ["lib"]
-  gem.version       = Season::Puppet::VERSION
+  gem.version       = Provizioning::VERSION
 
   gem.add_dependency(%q<capistrano>, [">= 0"])
   gem.add_dependency(%q<capistrano-ext>, [">= 0"])

@@ -1,5 +1,3 @@
-module Season
-  module Puppet
-    VERSION = "0.4.0"
-  end
+module Provizioning
+  VERSION = "0.4.0"
 end
