@@ -1,0 +1,14 @@
+#############################################################
+################### OFFICIAL UBUNTU REPOS ###################
+#############################################################
+
+###### Ubuntu Main Repos
+deb http://archive.ubuntu.com/ubuntu/ natty main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ natty main 
+
+###### Ubuntu Update Repos
+deb http://archive.ubuntu.com/ubuntu/ natty-security main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ natty-updates main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ natty-proposed main restricted universe multiverse 
+deb http://archive.ubuntu.com/ubuntu/ natty-backports main restricted universe multiverse
+deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Set where stow is going to be installed:
+if (( UID == 0 )) ; then
+  PACKAGES_PATH=/usr/local
+else
+  PACKAGES_PATH=$HOME/.packages
+fi
+
+mkdir -p $PACKAGES_PATH/{bin,share,include,lib}
+
+PACKAGE=ruby-1.9.3-p0
+STOW_PATH=$PACKAGES_PATH/stow
+PREFIX=$STOW_PATH/$PACKAGE
+
+pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
+  curl -O http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz
+  tar xzf yaml-0.1.4.tar.gz
+  cd yaml-0.1.4
+  ./configure --prefix=$PREFIX
+  make install
+popd
+
+pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
+  curl -O http://ftp.ruby-lang.org/pub/ruby/1.9/$PACKAGE.tar.gz
+  tar xzf $PACKAGE.tar.gz
+  cd $PACKAGE
+  ./configure --prefix=$PREFIX --disable-install-doc
+  make install
+popd
+
+# Install latest RubyGems and install basic gems.
+pushd $PREFIX
+  ./bin/gem update --system
+  ./bin/gem install bundler --pre --no-ri --no-rdoc
+  ./bin/gem install rake --no-ri --no-rdoc
+popd
+
+stow -d $STOW_PATH -t $PACKAGES_PATH $PACKAGE
+
+# You can verify Ruby has been properly installed with Yaml support by
+# running the following command:
+#
+#     $ ruby -rpsych -e 'puts Psych.load("win: true")'
+#

@@ -1,0 +1,39 @@
+#!/bin/bash 
+### BEGIN INIT INFO 
+# Provides:          myapp passenger in standalone 
+# Default-Start:     2 3 4 5 
+# Default-Stop:      0 1 6 
+# X-Interactive:     true 
+# Short-Description: Start/stop de-fra.com web site 
+### END INIT INFO 
+
+#PATH=/sbin:/usr/sbin:/bin:/usr/bin 
+GEM_HOME=/usr/local/stow/ruby-1.9.3-p0/lib/ruby/gems/1.9.1
+PASSENGER=/usr/local/bin/passenger
+PORT=80
+ENVIRONMENT=production
+APP="/var/www/myapp/current" 
+USER=deploy 
+RUBY_VERSION=1.9.2
+USER=deploy 
+SET_PATH="cd $APP; export GEM_HOME=$GEM_HOME" 
+CMD="$SET_PATH; $PASSENGER start -p $PORT -e $ENVIRONMENT -d" 
+
+. /lib/lsb/init-functions 
+
+case "$1" in 
+  start) 
+    echo "Starting myapp passenger" 
+    echo $CMD 
+    su - $USER -c "$CMD" 
+    ;; 
+  stop) 
+    echo "Stopping myapp passenger" 
+    cd $APP 
+    $PASSENGER stop -p $PORT 
+    ;; 
+  *) 
+    echo "Usage: $0 start|stop" >&2 
+    exit 3 
+    ;; 
+esac 
