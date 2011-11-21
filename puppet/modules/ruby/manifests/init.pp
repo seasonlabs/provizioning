@@ -12,7 +12,13 @@ class ruby($version = 'ruby-1.9.3-p0') {
     timeout => "-1",
     require => [Package["stow"], File["ruby-stow-boot"]];
   }
-  
+
+  # Dependencies
+  $packagelist = ['sqlite3', 'libsqlite3-dev']
+  package { $packagelist: 
+    ensure => installed
+  }
+
   if ! defined(Package['build-essential'])      { package { 'build-essential': ensure => installed } }
   if ! defined(Package['libcurl4-openssl-dev']) { package { 'libcurl4-openssl-dev': ensure => installed } }
 }
