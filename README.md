@@ -24,5 +24,6 @@ Configure deploy.rb :user var for deployment and provisioning or use :puppet_use
 Use capistrano tasks to provision the server:
 
 	bundle exec cap puppet:bootstrap
+	bundle exec cap puppet:apply
 
 Based on https://github.com/freerange/freerange-puppet
