@@ -3,6 +3,6 @@ Exec {
 }
 
 import "classes/*"
-include base, ruby, monit
+include base, gemrc
 
 import "roles/*"

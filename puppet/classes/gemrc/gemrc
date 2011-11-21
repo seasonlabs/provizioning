@@ -6,3 +6,4 @@
 :backtrace: false
 :sources:
 - http://gemcutter.org/
+gem: --no-ri --no-rdoc

@@ -25,11 +25,11 @@ class base {
       source => "/usr/share/zoneinfo/Europe/London"
     }
 
-    package {"ntp":
+    package { "ntp":
       ensure => present
     }
 
-    service {"ntpd":
+    service { "ntp":
       ensure => running,
       require => Package["ntp"]
     }
@@ -48,7 +48,7 @@ class base {
   }
 
   class application {
-    user {"application":
+    user { "application":
       shell => "/bin/false"
     }
 
