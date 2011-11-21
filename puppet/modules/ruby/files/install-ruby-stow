@@ -25,7 +25,7 @@ pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
   curl -O http://ftp.ruby-lang.org/pub/ruby/1.9/$PACKAGE.tar.gz
   tar xzf $PACKAGE.tar.gz
   cd $PACKAGE
-  ./configure --prefix=$PREFIX --disable-install-doc
+  ./configure --prefix=$PREFIX --enable-shared --disable-install-doc --with-opt-dir=$PACKAGES_PATH/lib
   make && make install
 popd
 
