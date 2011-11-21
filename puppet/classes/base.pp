@@ -5,6 +5,11 @@ class base {
   include base::time
   include base::application
 
+  $packagelist = ['git-core', 'vim', 'screen']
+  package { $packagelist: 
+    ensure => installed
+  }
+
   host { "$hostname.lan" :
     ensure => present,
     host_aliases => $hostname,

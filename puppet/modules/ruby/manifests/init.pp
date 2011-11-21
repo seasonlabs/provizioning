@@ -1,5 +1,5 @@
 class ruby($version = 'ruby-1.9.3-p0') {
-  file {"ruby-stow-boot":
+  file { "ruby-stow-boot":
     ensure => 'present',
     path => '/root/install-ruby-stow',
     owner => 'root', group => 'root', mode => '0774',

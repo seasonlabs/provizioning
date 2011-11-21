@@ -22,9 +22,9 @@ cd /etc/apt
 var=`cat /etc/issue`
 if [ "$var" == "Ubuntu 11.04 \n \l" ]
 then
-wget https://raw.github.com/gist/6a44de628fc13f4dc0c2/natty.sources.list -O sources.list
+wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/natty.sources.list -O sources.list
 else
-wget https://raw.github.com/gist/6a44de628fc13f4dc0c2/lucid.sources.list -O sources.list
+wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/lucid.sources.list -O sources.list
 fi
 
 apt-get update
