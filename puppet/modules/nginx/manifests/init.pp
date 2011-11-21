@@ -38,7 +38,7 @@ class nginx {
 		require => File["/etc/nginx/nginx.conf"],
 	}
 
-        file { "/etc/nginx/nginx.conf":
+    file { "/etc/nginx/nginx.conf":
 		ensure 	=> present,
 		mode 	=> 644,
 		owner 	=> root,
