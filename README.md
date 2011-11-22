@@ -4,7 +4,7 @@ Server provisioning tool
 Intro
 -----
 
-Provizioning is the tool that Season use internally to setup new machines it uses Capistrano for bootstrapping the server and uploading the recipes, then use puppet for configuration and fine tunning.
+Provizioning is a collection of puppet recipes and utils that we at Season use to setup new machines it uses Capistrano for bootstrapping the server and uploading the recipes, then use puppet for configuration and fine tunning.
 
 Usage
 -----
