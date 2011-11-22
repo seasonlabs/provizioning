@@ -3,7 +3,6 @@ class { "base": stage => "pre-flight" }
 
 class base {
   include base::time
-  include base::application
 
   $packagelist = ['git-core', 'vim', 'screen']
   package { $packagelist: 
@@ -27,7 +26,7 @@ class base {
 
   class time {
     file { "/etc/localtime":
-      source => "/usr/share/zoneinfo/Europe/London"
+      source => "/usr/share/zoneinfo/Europe/Madrid"
     }
 
     package { "ntp":
@@ -49,20 +48,6 @@ class base {
       "Debian": {
         # todo
       }
-    }
-  }
-
-  class application {
-    user { "application":
-      shell => "/bin/false"
-    }
-
-    file { "/var/apps":
-      ensure => directory,
-      owner => root,
-      group => application,
-      require => [User[application]],
-      mode => 771
     }
   }
 
