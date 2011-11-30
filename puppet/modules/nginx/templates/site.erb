@@ -1,15 +1,15 @@
-upstream <%= name %> {
-  server unix:/tmp/<%= name %>.sock fail_timeout=0;
+upstream <%= domain_name.sub(".", "_") %> {
+  server unix:/tmp/<%= domain_name %>.sock fail_timeout=0;
 }
 
 server {
   listen 80;
   client_max_body_size 4G;
-  server_name <%= domain_name %>;
+  server_name <%= domain_name %> www.<%= domain_name %>;
 
   keepalive_timeout 5;
 
-  root <%= deploy_to %>;
+  root <%= deploy_to %>/current/public;
 
   location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -17,13 +17,13 @@ server {
     proxy_redirect off;
 
     if (!-f $request_filename) {
-      proxy_pass http://<%= name %>;
+      proxy_pass http://<%= domain_name.sub(".", "_") %>;
       break;
     }
   }
 
   error_page 500 502 503 504 /500.html;
   location = /500.html {
-    root <%= deploy_to %>;
+    root <%= deploy_to %>/current/public;
   }
 }
