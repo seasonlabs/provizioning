@@ -11,6 +11,12 @@ server {
 
   root <%= deploy_to %>/current/public;
 
+  location ~ ^/(assets)/  {
+    gzip_static on; # to serve pre-gzipped version
+    expires max;
+    add_header Cache-Control public;
+  }
+
   location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
