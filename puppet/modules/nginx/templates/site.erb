@@ -1,5 +1,5 @@
 upstream <%= domain_name.sub(".", "_") %> {
-  server unix:/tmp/<%= domain_name %>_<%= app_env %>.sock fail_timeout=0;
+  server unix:/tmp/<%= application %>.sock fail_timeout=0;
 }
 
 server {

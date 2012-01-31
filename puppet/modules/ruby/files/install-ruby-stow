@@ -18,20 +18,22 @@ pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
   tar xzf yaml-0.1.4.tar.gz
   cd yaml-0.1.4
   ./configure --prefix=$PREFIX
-  make && make install
+  make install
 popd
 
 pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
   curl -O http://ftp.ruby-lang.org/pub/ruby/1.9/$PACKAGE.tar.gz
   tar xzf $PACKAGE.tar.gz
   cd $PACKAGE
-  ./configure --prefix=$PREFIX --enable-shared --disable-install-doc --with-opt-dir=$PACKAGES_PATH/lib
-  make && make install
+  ./configure --prefix=$PREFIX --disable-install-doc
+  make install
 popd
 
-# Install latest RubyGems.
+# Install latest RubyGems and install basic gems.
 pushd $PREFIX
   ./bin/gem update --system
+  ./bin/gem install bundler --pre --no-ri --no-rdoc
+  ./bin/gem install rake --no-ri --no-rdoc
 popd
 
 stow -d $STOW_PATH -t $PACKAGES_PATH $PACKAGE
