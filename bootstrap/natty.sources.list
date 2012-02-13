@@ -11,4 +11,3 @@ deb http://archive.ubuntu.com/ubuntu/ natty-security main restricted universe mu
 deb http://archive.ubuntu.com/ubuntu/ natty-updates main restricted universe multiverse 
 deb http://archive.ubuntu.com/ubuntu/ natty-proposed main restricted universe multiverse 
 deb http://archive.ubuntu.com/ubuntu/ natty-backports main restricted universe multiverse
-deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
