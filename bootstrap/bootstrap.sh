@@ -49,7 +49,8 @@ apt-get -y install curl
 # Extra stuff to make things work ...
 ##############################################################################
 
-locale-gen en_US.UTF-8
+echo 'export LANG=en_US.UTF-8' > /etc/default/locale
+locale-gen en_US en_US.UTF-8
 dpkg-reconfigure locales
 
 ##############################################################################
