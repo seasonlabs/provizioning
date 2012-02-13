@@ -4,8 +4,8 @@ require File.expand_path('../lib/provizioning/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Victor Castell"]
   gem.email         = ["victor.castell@season.es"]
-  gem.summary       = %Q{Server provisioning tool based on Sprinkle}
-  gem.description   = %Q{Server provisioning tools, recipes and templates based on Sprinkle}
+  gem.summary       = %Q{Puppet based server provisioning tool}
+  gem.description   = %Q{Puppet server provisioning tools, recipes and templates}
   gem.homepage      = "http://github.com/seasonlabs/provizioning"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
