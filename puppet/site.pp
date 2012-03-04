@@ -3,6 +3,6 @@ Exec {
 }
 
 import "classes/*"
-include base, gemrc, postfix, logrotate, ufw, imagemagick
+include base, gemrc, logrotate, ufw
 
 import "roles/*"
