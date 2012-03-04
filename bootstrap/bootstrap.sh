@@ -34,8 +34,6 @@ apt-get -y upgrade
 # Install essential stuff ...
 ##############################################################################
 
-#apt-get -y install python-software-properties
-
 apt-get update
 apt-get -y install build-essential
 apt-get -y install git-core
