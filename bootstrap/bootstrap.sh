@@ -34,11 +34,8 @@ apt-get -y upgrade
 # Install essential stuff ...
 ##############################################################################
 
-apt-get -y install python-software-properties
-add-apt-repository ppa:pitti/postgresql
-add-apt-repository ppa:nginx/stable
-#10gen key
-apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+#apt-get -y install python-software-properties
+
 apt-get update
 apt-get -y install build-essential
 apt-get -y install git-core

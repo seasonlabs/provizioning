@@ -13,6 +13,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 class postgres {
+	include "postgres::$operatingsystem"
+
 	package { [postgresql]: ensure => installed }
 	package { [libpq-dev]: ensure => installed }
 
@@ -20,6 +22,30 @@ class postgres {
         ensure => running,
         enable => true,
         hasstatus => true,
-        subscribe => [Package[postgresql]]
+        subscribe => [Package[postgresql]],
+    }
+
+    class ubuntu {
+    	include apt
+		
+		exec {"get-ppa-apt-key":
+        	command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 8683D8A2"
+      	}
+
+		file {"/etc/apt/sources.list.d/postgres.list":
+			ensure => present,
+			owner => root,
+			group => root,
+			content => $operatingsystemrelease ? {
+				'10.04' => 'deb http://ppa.launchpad.net/pitti/postgresql/ubuntu lucid main',
+				'11.04' => 'deb http://ppa.launchpad.net/pitti/postgresql/ubuntu natty main',
+			},
+			require => Exec["get-ppa-apt-key"],
+		}
+
+		exec {"update apt to find postgres":
+			command => "/usr/bin/apt-get -y update",
+			require => File["/etc/apt/sources.list.d/postgres.list"],
+		}
     }
 }

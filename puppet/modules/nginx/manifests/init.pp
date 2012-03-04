@@ -21,6 +21,7 @@
 #
 
 class nginx {
+	include "nginx::$operatingsystem"
 
 	$nginx_includes = "/etc/nginx/includes"
 	$nginx_conf = "/etc/nginx/conf.d"
@@ -32,11 +33,35 @@ class nginx {
 	if ! defined(Package['nginx']) { package { nginx: ensure => installed }}
 
 	service { nginx:
-        	ensure => running,
-        	enable => true,
+        ensure => running,
+        enable => true,
 		hasrestart => true,
-		require => File["/etc/nginx/nginx.conf"],
+		require => [File["/etc/nginx/nginx.conf"], File["/etc/apt/sources.list.d/nginx.list"]],
 	}
+
+	class ubuntu {
+    	include apt
+
+    	exec {"get-ppa-apt-key":
+        	command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C300EE8C"
+      	}
+      	
+		file {"/etc/apt/sources.list.d/nginx.list":
+			ensure => present,
+			owner => root,
+			group => root,
+			content => $operatingsystemrelease ? {
+				'10.04' => 'deb http://ppa.launchpad.net/nginx/stable/ubuntu lucid main',
+				'11.04' => 'deb http://ppa.launchpad.net/nginx/stable/ubuntu natty main',
+			},
+			require => Exec["get-ppa-apt-key"],
+		}
+
+		exec {"update apt to find nginx":
+			command => "/usr/bin/apt-get -y update",
+			require => File["/etc/apt/sources.list.d/nginx.list"],
+		}
+    }
 
     file { "/etc/nginx/nginx.conf":
 		ensure 	=> present,
@@ -46,7 +71,7 @@ class nginx {
 		content => template("nginx/nginx.conf.erb"),
 		notify 	=> Exec["reload-nginx"],
 		require => Package["nginx"],
-        }
+    }
 
 	file { $nginx_conf:
 		ensure => directory,
@@ -81,8 +106,8 @@ class nginx {
 
 	exec { "reload-nginx":
 		command => "/etc/init.d/nginx reload",
-                refreshonly => true,
-        }
+        refreshonly => true,
+    }
 
 	# Define: nginx::config
 	#
@@ -119,7 +144,7 @@ class nginx {
 	# * ensure: typically set to "present" or "absent". Defaults to "present"
 	# * content: site definition (should be a template).
 	#
-	define site ( $ensure = 'present', $content = '' ) {
+	define site($ensure = 'present', $content = '') {
 		case $ensure {
 			'present' : {
 				nginx::install_site { $name:
@@ -143,7 +168,7 @@ class nginx {
 	# Install nginx vhost
 	# This definition is private, not intended to be called directly
 	#
-	define install_site ($content = '' ) {
+	define install_site($content = '' ) {
 	  # first, make sure the site config exists
 		case $content {
 			'': {
@@ -200,6 +225,4 @@ class nginx {
 			notify => Exec["reload-nginx"],
 		}    
 	}
-
-
 }
