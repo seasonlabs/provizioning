@@ -23,12 +23,13 @@ class postgres {
         enable => true,
         hasstatus => true,
         subscribe => [Package[postgresql]],
+        require => [File['/etc/apt/sources.list.d/postgres.list']]
     }
 
     class ubuntu {
     	include apt
 		
-		exec {"get-ppa-apt-key":
+		exec {"get-postgres-apt-key":
         	command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 8683D8A2"
       	}
 
@@ -40,12 +41,12 @@ class postgres {
 				'10.04' => 'deb http://ppa.launchpad.net/pitti/postgresql/ubuntu lucid main',
 				'11.04' => 'deb http://ppa.launchpad.net/pitti/postgresql/ubuntu natty main',
 			},
-			require => Exec["get-ppa-apt-key"],
+			require => Exec["get-postgres-apt-key"],
 		}
 
 		exec {"update apt to find postgres":
-			command => "/usr/bin/apt-get -y update",
-			require => File["/etc/apt/sources.list.d/postgres.list"],
+			command => '/usr/bin/apt-get -y update',
+			require => File['/etc/apt/sources.list.d/postgres.list'],
 		}
     }
 }

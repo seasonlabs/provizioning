@@ -42,7 +42,7 @@ class nginx {
 	class ubuntu {
     	include apt
 
-    	exec {"get-ppa-apt-key":
+    	exec {"get-nginx-apt-key":
         	command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C300EE8C"
       	}
       	
@@ -54,7 +54,7 @@ class nginx {
 				'10.04' => 'deb http://ppa.launchpad.net/nginx/stable/ubuntu lucid main',
 				'11.04' => 'deb http://ppa.launchpad.net/nginx/stable/ubuntu natty main',
 			},
-			require => Exec["get-ppa-apt-key"],
+			require => Exec["get-nginx-apt-key"],
 		}
 
 		exec {"update apt to find nginx":
