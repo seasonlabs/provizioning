@@ -27,6 +27,7 @@ else
 wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/lucid.sources.list -O sources.list
 fi
 
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
 
@@ -34,7 +35,6 @@ apt-get -y upgrade
 # Install essential stuff ...
 ##############################################################################
 
-apt-get update
 apt-get -y install build-essential
 apt-get -y install git-core
 apt-get -y install vim

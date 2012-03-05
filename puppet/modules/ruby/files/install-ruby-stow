@@ -9,7 +9,7 @@ fi
 
 mkdir -p $PACKAGES_PATH/{bin,share,include,lib}
 
-PACKAGE=ruby-1.9.3-p0
+PACKAGE=ruby-1.9.3-p125
 STOW_PATH=$PACKAGES_PATH/stow
 PREFIX=$STOW_PATH/$PACKAGE
 
@@ -18,7 +18,7 @@ pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
   tar xzf yaml-0.1.4.tar.gz
   cd yaml-0.1.4
   ./configure --prefix=$PREFIX
-  make install
+  make && make install
 popd
 
 pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
@@ -26,7 +26,7 @@ pushd $(mktemp -d /tmp/stows-ruby.XXXXXXXXXX)
   tar xzf $PACKAGE.tar.gz
   cd $PACKAGE
   ./configure --prefix=$PREFIX --disable-install-doc
-  make install
+  make && make install
 popd
 
 # Install latest RubyGems and install basic gems.
