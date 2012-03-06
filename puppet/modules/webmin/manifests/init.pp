@@ -1,5 +1,5 @@
 class webmin {
-    $base = "webmin_1.480_all.deb"
+    $base = "webmin_1.580_all.deb"
     $url = "http://prdownloads.sourceforge.net/webadmin/"
     $archive = "/root/$base"
     $installed = "/etc/webmin/version"
