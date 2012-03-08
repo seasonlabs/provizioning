@@ -16,7 +16,7 @@ class ruby($version = 'ruby-1.9.3-p0') {
   }
 
   # Dependencies
-  $packagelist = ['sqlite3', 'libsqlite3-dev', 'libreadline-dev', 'libxml2', 'libxml2-dev', 'libxslt-dev', 'build-essential', 'libcurl4-openssl-dev']
+  $packagelist = ['sqlite3', 'libsqlite3-dev', 'libreadline-dev', 'libxml2', 'libxml2-dev', 'libxslt1-dev', 'build-essential', 'libcurl4-openssl-dev']
   package { $packagelist: 
     ensure => installed
   }

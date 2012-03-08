@@ -4,10 +4,18 @@ class webmin {
     $archive = "/root/$base"
     $installed = "/etc/webmin/version"
 
-    package { "libnet-ssleay-perl": ensure => installed }
-    package { "libauthen-pam-perl": ensure => installed }
-    package { "libio-pty-perl": ensure => installed }
-    package { "libmd5-perl": ensure => installed }
+    class dependencies {
+        package { "perl": ensure => installed }
+        package { "libnet-ssleay-perl": ensure => installed }
+        package { "openssl": ensure => installed }
+        package { "libauthen-pam-perl": ensure => installed }
+        package { "libpam-runtime": ensure => installed }
+        package { "libio-pty-perl": ensure => installed }
+        package { "apt-show-versions": ensure => installed }
+        package { "python": ensure => installed }
+    }
+
+    include webmin::dependencies
 
     service { webmin:
         ensure => running,
@@ -25,7 +33,7 @@ class webmin {
         cwd => "/root",
         command => "dpkg -i $archive",
         creates => $installed,
-        require => Exec["DownloadWebmin"],
+        require => [Exec["DownloadWebmin"], Class['webmin::dependencies']],
         notify => Service[webmin],
     }
 }

@@ -4,7 +4,7 @@ class { "base": stage => "pre-flight" }
 class base {
   include base::time
 
-  $packagelist = ['git-core', 'vim', 'screen']
+  $packagelist = ['git-core', 'vim', 'screen', 'htop']
   package { $packagelist: 
     ensure => installed
   }
