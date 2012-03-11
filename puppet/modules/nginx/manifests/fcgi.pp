@@ -46,7 +46,7 @@ class nginx::fcgi inherits nginx {
 	#                 fastcgi_pass    => "127.0.0.1:9000",
 	#                 server_name     => "$fqdn",
 	#          }
-	define site ( $ensure = 'present', $index = 'index.php', $root, $fastcgi_pass, $include = '', $listen = '80', $server_name = '', $access_log = '', $ssl_certificate = '', $ssl_certificate_key = '', $ssl_session_timeout = '5m') { 
+	define site ( $ensure = 'present', $index = 'index.php', $root, $fastcgi_pass, $include = '', $listen = '80', $server_name = '', $access_log = '', $error_log = '', $ssl_certificate = '', $ssl_certificate_key = '', $ssl_session_timeout = '5m') { 
 
 		$real_server_name = $server_name ? { 
 			'' => "${name}",
@@ -57,6 +57,12 @@ class nginx::fcgi inherits nginx {
 			'' => "/var/log/nginx/${name}_access.log",
             		default => $access_log,
           	}
+
+        $real_error_log = $error_log ? { 
+			'' => "/var/log/nginx/${name}_error.log",
+            		default => $error_log,
+          	}
+
 
 		#Autogenerating ssl certs
 		if $listen == '443' and  $ensure == 'present' and ( $ssl_certificate == '' or $ssl_certificate_key == '') {
