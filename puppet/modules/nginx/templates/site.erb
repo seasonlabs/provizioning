@@ -10,6 +10,15 @@ server {
   keepalive_timeout 5;
 
   root <%= deploy_to %>/current/public;
+  
+  if (-f $document_root/system/maintenance.html) {
+    return 503;
+  }
+  error_page 503 @maintenance;
+  location @maintenance {
+    rewrite  ^(.*)$  /system/maintenance.html last;
+    break;
+  }
 
   location ~ ^/(assets)/  {
     gzip_static on; # to serve pre-gzipped version
