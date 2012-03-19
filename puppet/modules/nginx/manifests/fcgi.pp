@@ -32,6 +32,7 @@ class nginx::fcgi inherits nginx {
 	#
 	# Templates :
 	#	* nginx/fcgi_site.erb
+	#	* nginx/fcgi_drupal_site.erb
 	#
 	# Sample Usage :
 	#         nginx::fcgi::site {"default":
@@ -46,23 +47,30 @@ class nginx::fcgi inherits nginx {
 	#                 fastcgi_pass    => "127.0.0.1:9000",
 	#                 server_name     => "$fqdn",
 	#          }
-	define site ( $ensure = 'present', $index = 'index.php', $root, $fastcgi_pass, $include = '', $listen = '80', $server_name = '', $access_log = '', $error_log = '', $ssl_certificate = '', $ssl_certificate_key = '', $ssl_session_timeout = '5m') { 
+  #          
+  #          nginx::fcgi::drupal_site {"default":
+	#                 root            => "/var/www/nginx-default",
+	#                 fastcgi_pass    => "127.0.0.1:9000",
+	#                 server_name     => ["localhost", "$hostname", "$fqdn"],
+	#          }
+	#
+
+	define site($ensure = 'present', $index = 'index.php', $root, $fastcgi_pass, $template = "nginx/fcgi_site.erb", $include = '', $listen = '80', $server_name = '', $access_log = '', $error_log = '', $ssl_certificate = '', $ssl_certificate_key = '', $ssl_session_timeout = '5m') { 
 
 		$real_server_name = $server_name ? { 
 			'' => "${name}",
-            		default => $server_name,
-          	}
+      default => $server_name,
+    }
 
 		$real_access_log = $access_log ? { 
 			'' => "/var/log/nginx/${name}_access.log",
-            		default => $access_log,
-          	}
+      default => $access_log,
+    }
 
-        $real_error_log = $error_log ? { 
-			'' => "/var/log/nginx/${name}_error.log",
-            		default => $error_log,
-          	}
-
+    $real_error_log = $error_log ? { 
+		  '' => "/var/log/nginx/${name}_error.log",
+      default => $error_log,
+    }
 
 		#Autogenerating ssl certs
 		if $listen == '443' and  $ensure == 'present' and ( $ssl_certificate == '' or $ssl_certificate_key == '') {
@@ -76,18 +84,22 @@ class nginx::fcgi inherits nginx {
 
 		$real_ssl_certificate = $ssl_certificate ? { 
 			'' => "/etc/nginx/ssl/${name}.pem",
-            		default => $ssl_certificate,
-          	}
-		$real_ssl_certificate_key = $ssl_certificate_key ? { 
+      default => $ssl_certificate,
+    }
+		
+    $real_ssl_certificate_key = $ssl_certificate_key ? { 
 			'' => "/etc/nginx/ssl/${name}.key",
-            		default => $ssl_certificate_key,
-          	}
+      default => $ssl_certificate_key,
+    }
 
 		nginx::site {"${name}":
 			ensure	=> $ensure,
-			content	=> template("nginx/fcgi_site.erb"),
+			content	=> template($template),
 		}
 		
 	}
-
+  
+  define drupal_site($ensure = 'present', $index = 'index.php', $root, $fastcgi_pass, $include = '', $listen = '80', $server_name = '', $access_log = '', $error_log = '', $ssl_certificate = '', $ssl_certificate_key = '', $ssl_session_timeout = '5m') {
+    nginx::fcgi::site($ensure, $index, $root, $fastcgi_pass, "nginx/fcgi_drupal_site.erb", $include, $listen, $server_name, $access_log, $error_log, $ssl_certificate, $ssl_certificate_key, $ssl_session_timeout) 
+  }
 }
