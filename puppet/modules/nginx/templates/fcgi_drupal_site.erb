@@ -44,11 +44,12 @@ server {
       # Some modules enforce no slash (/) at the end of the URL
       # Else this rewrite block wouldn't be needed (GlobalRedirect)
        rewrite ^/(.*)$ /index.php?q=$1;
+    }
 
-           location ~ \.php$ {
+    location ~ \.php$ {
       fastcgi_split_path_info ^(.+\.php)(/.+)$;
       # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-      include /etc/nginx/fastcgi_params;
+      include /etc/nginx/includes/fastcgi_params.inc;
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       fastcgi_intercept_errors on;
 		  fastcgi_pass <%= fastcgi_pass %>;
