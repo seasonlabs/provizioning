@@ -72,6 +72,40 @@ class nginx::fcgi inherits nginx {
       default => $error_log,
     }
 
+    $packagelist = ['php5-cgi', 'psmisc', 'spawn-fcgi']
+    package { $packagelist: 
+      ensure => installed,
+    }
+
+    file {"/var/run/php-fastcgi":
+      ensure => directory,
+      owner => 'www-data', group => 'www-data'
+    }
+
+    file {"/usr/bin/php-fastcgi":
+      source => 'puppet:///modules/nginx/php-fastcgi',
+      owner => 'root', group => 'root', mode => '0777',
+      ensure => present,
+    }
+
+    file {"/etc/init.d/init-php-fastcgi":
+      source => 'puppet:///modules/nginx/init-php-fastcgi',
+      owner => 'root', group => 'root', mode => '0777',
+      ensure => present,
+    }
+
+    exec {"/etc/init.d/init-php-fastcgi start":
+      require => [
+        File["/usr/bin/php-fastcgi"], 
+        File["/etc/init.d/init-php-fastcgi"], 
+        File["/var/run/php-fastcgi"]
+      ],
+    }
+    
+    exec {"update-rc.d init-php-fastcgi defaults":
+      require => Exec["/etc/init.d/init-php-fastcgi start"],
+    }
+
 		#Autogenerating ssl certs
 		if $listen == '443' and  $ensure == 'present' and ( $ssl_certificate == '' or $ssl_certificate_key == '') {
 			exec {"generate-${name}-certs":
