@@ -1,38 +1,57 @@
 server {
-        listen   <%= listen %> ;
-
-	server_name  <% real_server_name.each do |s_n| -%><%= s_n %> <% end -%>;
-
-        access_log  <%= real_access_log %>;
-
-	root <%= root %>;
+  server_name  <% real_server_name.each do |s_n| -%><%= s_n %> <% end -%>;
+  access_log  <%= real_access_log %>;
+  error_log <%= real_error_log %>;
+  root <%= root %>;
 
 <% if listen == '443' %>
-        ssl  on;
-        ssl_certificate  <%= real_ssl_certificate %>;
-        ssl_certificate_key  <%= real_ssl_certificate_key %>;
+  ssl  on;
+  ssl_certificate  <%= real_ssl_certificate %>;
+  ssl_certificate_key  <%= real_ssl_certificate_key %>;
 
-        ssl_session_timeout  <%= ssl_session_timeout %>;
+  ssl_session_timeout  <%= ssl_session_timeout %>;
 
-        ssl_protocols  SSLv2 SSLv3 TLSv1;
-        ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
-        ssl_prefer_server_ciphers   on;
+  ssl_protocols  SSLv2 SSLv3 TLSv1;
+  ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+  ssl_prefer_server_ciphers   on;
 <% end -%>
-        location / {
-        }
+  # Very rarely should these ever be accessed outside of your LAN
+  location ~* \.(txt|log)$ {
+    allow 10.0.0.0/8;
+    allow 172.16.0.0/12;
+    allow 192.168.0.0/16;
+    deny all;
+  }
 
-	location ~ \.php$ {
-		fastcgi_pass <%= fastcgi_pass %>;
-		fastcgi_index index.php;
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		include /etc/nginx/includes/fastcgi_params.inc;
-	}
+  location ~ \..*/.*\.php$ {
+    return 403;
+  }
 
-	location ~ /\.ht {
-                deny  all;
-        }
+  location / {
+    # This is cool because no php is touched for static content
+     try_files $uri @rewrite;
+  }
 
-<% if include  != '' %>	<%include.each do |inc| %>include <%= inc %>;
-	<% end -%><% end -%>
+  location @rewrite {
+    # Some modules enforce no slash (/) at the end of the URL
+    # Else this rewrite block wouldn't be needed (GlobalRedirect)
+     rewrite ^/(.*)$ /index.php?url=$1;
+  }
+
+  location ~ \.php$ {
+    fastcgi_pass <%= fastcgi_pass %>;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include /etc/nginx/includes/fastcgi_params.inc;
+  }
+
+  # Deny access to .htaccess files,
+  # git & svn repositories, etc
+  location ~ /(\.ht|\.git|\.svn) {
+      deny  all;
+  }
+
+<% if include  != '' %> <%include.each do |inc| %>include <%= inc %>;
+  <% end -%><% end -%>
 }
 

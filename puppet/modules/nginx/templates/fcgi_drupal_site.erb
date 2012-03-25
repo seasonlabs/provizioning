@@ -64,4 +64,10 @@ server {
       expires max;
       log_not_found off;
     }
+
+    # Deny access to .htaccess files,
+    # git & svn repositories, etc
+    location ~ /(\.ht|\.git|\.svn) {
+        deny  all;
+    }
 }
