@@ -100,6 +100,20 @@ class nginx::fcgi inherits nginx {
 	}
   
   define drupal_site($ensure = 'present', $index = 'index.php', $root, $fastcgi_pass, $include = '', $listen = '80', $server_name = '', $access_log = '', $error_log = '', $ssl_certificate = '', $ssl_certificate_key = '', $ssl_session_timeout = '5m') {
-    nginx::fcgi::site($ensure, $index, $root, $fastcgi_pass, "nginx/fcgi_drupal_site.erb", $include, $listen, $server_name, $access_log, $error_log, $ssl_certificate, $ssl_certificate_key, $ssl_session_timeout) 
+    nginx::fcgi::site {"${name}":
+      ensure              => $ensure, 
+      index               => $index, 
+      root                => $root, 
+      fastcgi_pass        => $fastcgi_pass, 
+      template            => "nginx/fcgi_drupal_site.erb", 
+      include             => $include, 
+      listen              => $listen, 
+      server_name         => $server_name, 
+      access_log          => $access_log, 
+      error_log           => $error_log, 
+      ssl_certificate     => $ssl_certificate, 
+      ssl_certificate_key => $ssl_certificate_key, 
+      ssl_session_timeout => $ssl_session_timeout, 
+    }
   }
 }
