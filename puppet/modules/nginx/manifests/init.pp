@@ -215,13 +215,13 @@ class nginx {
   # * content: include definition (should be a template).
   #
   define site_include($ensure = 'present', $content = '') {
-    file { "${nginx_includes}/${name}.inc":
+    file { "${nginx::nginx_includes}/${name}.inc":
       content => $content,
       mode => 644,
       owner => root,
       group => root,
       ensure => $ensure,
-      require => File["${nginx_includes}"],
+      require => File["${nginx::nginx_includes}"],
       notify => Exec["reload-nginx"],
     }    
   }
