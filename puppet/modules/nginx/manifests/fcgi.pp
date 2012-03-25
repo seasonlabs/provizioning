@@ -94,18 +94,19 @@ class nginx::fcgi inherits nginx {
       ensure => present,
     }
 
-    exec {"/etc/init.d/init-php-fastcgi start":
+    service {"init-php-fastcgi":
+      ensure => running,
+      subscribe => File['/usr/bin/php-fastcgi'],
+      enable => true,
+      hasstatus => false,
+      pattern => '/usr/bin/php5-cgi',
       require => [
-        File["/usr/bin/php-fastcgi"], 
-        File["/etc/init.d/init-php-fastcgi"], 
-        File["/var/run/php-fastcgi"]
+        File['/usr/bin/php-fastcgi'], 
+        File['/etc/init.d/init-php-fastcgi'], 
+        File['/var/run/php-fastcgi']
       ],
     }
     
-    exec {"update-rc.d init-php-fastcgi defaults":
-      require => Exec["/etc/init.d/init-php-fastcgi start"],
-    }
-
 		#Autogenerating ssl certs
 		if $listen == '443' and  $ensure == 'present' and ( $ssl_certificate == '' or $ssl_certificate_key == '') {
 			exec {"generate-${name}-certs":
