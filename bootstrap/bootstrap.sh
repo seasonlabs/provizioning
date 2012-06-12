@@ -55,7 +55,7 @@ dpkg-reconfigure locales
 apt-get -y install ruby ruby-dev irb libopenssl-ruby rdoc
 
 cd /tmp
-RUBYGEMS="1.8.11"
+RUBYGEMS="1.8.24"
 curl -O http://production.cf.rubygems.org/rubygems/rubygems-$RUBYGEMS.tgz
 tar xvzf rubygems-$RUBYGEMS.tgz
 ruby rubygems-$RUBYGEMS/setup.rb --no-ri --no-rdoc --no-format-executable
