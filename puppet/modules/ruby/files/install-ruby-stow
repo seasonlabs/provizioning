@@ -34,6 +34,7 @@ pushd $PREFIX
   ./bin/gem update --system
   ./bin/gem install bundler --pre --no-ri --no-rdoc
   ./bin/gem install rake --no-ri --no-rdoc
+  ./bin/gem install puppet --no-ri --no-rdoc
 popd
 
 stow -d $STOW_PATH -t $PACKAGES_PATH $PACKAGE

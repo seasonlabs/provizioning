@@ -1,4 +1,4 @@
-class ruby($version = 'ruby-1.9.3-p0') {
+class ruby($version = 'ruby-1.9.3-p125') {
   include stow
 
   file { "ruby-stow-boot":
