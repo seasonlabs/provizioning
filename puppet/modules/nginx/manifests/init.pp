@@ -43,7 +43,7 @@ class nginx {
       include apt
 
       exec {"get-nginx-apt-key":
-          command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C300EE8C"
+          command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C3173AA6"
         }
         
     file {"/etc/apt/sources.list.d/nginx.list":
@@ -51,8 +51,8 @@ class nginx {
       owner => root,
       group => root,
       content => $operatingsystemrelease ? {
-        '10.04' => 'deb http://ppa.launchpad.net/nginx/stable/ubuntu lucid main',
-        '11.04' => 'deb http://ppa.launchpad.net/nginx/stable/ubuntu natty main',
+        '10.04' => 'deb http://ppa.launchpad.net/brightbox/passenger-nginx/ubuntu lucid main',
+        '11.04' => 'deb http://ppa.launchpad.net/brightbox/passenger-nginx/ubuntu natty main',
       },
       require => Exec["get-nginx-apt-key"],
     }
