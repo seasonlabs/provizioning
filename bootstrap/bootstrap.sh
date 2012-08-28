@@ -20,11 +20,20 @@ cd /etc/apt
 
 # Sources depending on Ubuntu Version
 var=`cat /etc/issue`
+
+if [ "$var" == "Ubuntu 10.04 \n \l" ]
+then
+wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/lucid.sources.list -O sources.list
+fi
+
 if [ "$var" == "Ubuntu 11.04 \n \l" ]
 then
 wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/natty.sources.list -O sources.list
-else
-wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/lucid.sources.list -O sources.list
+fi
+
+if [ "$var" == "Ubuntu 12.04 \n \l" ]
+then
+wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/precise.sources.list -O sources.list
 fi
 
 export DEBIAN_FRONTEND=noninteractive
