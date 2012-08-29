@@ -71,7 +71,7 @@ then
 	tar xvzf rubygems-$RUBYGEMS.tgz
 	ruby rubygems-$RUBYGEMS/setup.rb --no-ri --no-rdoc --no-format-executable
 else
-	apt-get -y install ruby1.9.1 ruby1.9.1-dev libruby1.9.1
+	apt-get -y install ruby1.9.1 ruby1.9.1-dev libruby1.9.1 sqlite3 libsqlite3-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev build-essential libcurl4-openssl-dev
 fi
 
 # Cleanup the installation
