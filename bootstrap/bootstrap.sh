@@ -61,7 +61,12 @@ dpkg-reconfigure locales
 # Install Ruby
 ##############################################################################
 
-apt-get -y install ruby ruby-dev irb libopenssl-ruby rdoc
+if [ "$var" == "Ubuntu 10.04 \n \l" ]
+then
+	apt-get -y install ruby ruby-dev irb libopenssl-ruby
+else
+	apt-get -y install ruby1.9.1 ruby1.9.1-dev libruby1.9.1
+fi
 
 cd /tmp
 RUBYGEMS="1.8.24"
