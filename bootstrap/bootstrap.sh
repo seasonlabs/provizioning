@@ -64,15 +64,15 @@ dpkg-reconfigure locales
 if [ "$var" == "Ubuntu 10.04 \n \l" ]
 then
 	apt-get -y install ruby ruby-dev irb libopenssl-ruby
+
+	cd /tmp
+	RUBYGEMS="1.8.24"
+	curl -O http://production.cf.rubygems.org/rubygems/rubygems-$RUBYGEMS.tgz
+	tar xvzf rubygems-$RUBYGEMS.tgz
+	ruby rubygems-$RUBYGEMS/setup.rb --no-ri --no-rdoc --no-format-executable
 else
 	apt-get -y install ruby1.9.1 ruby1.9.1-dev libruby1.9.1
 fi
-
-cd /tmp
-RUBYGEMS="1.8.24"
-curl -O http://production.cf.rubygems.org/rubygems/rubygems-$RUBYGEMS.tgz
-tar xvzf rubygems-$RUBYGEMS.tgz
-ruby rubygems-$RUBYGEMS/setup.rb --no-ri --no-rdoc --no-format-executable
 
 # Cleanup the installation
 apt-get -y autoremove
