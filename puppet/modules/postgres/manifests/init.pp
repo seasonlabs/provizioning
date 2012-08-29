@@ -13,8 +13,11 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 class postgres {
-  if $operatingsystem == /(Darwin|FreeBSD)/ && $operatingsystemrelease  < '12.04' {
-    include "postgres::$operatingsystem"    
+  if $operatingsystem == 'ubuntu' and $operatingsystemrelease < '12.04' {
+    include "postgres::$operatingsystem"
+    $require = File['/etc/apt/sources.list.d/postgres.list']
+  } else {
+    $require = []
   }
 
 	package { [postgresql]: ensure => installed }
@@ -25,7 +28,7 @@ class postgres {
       enable => true,
       hasstatus => true,
       subscribe => [Package[postgresql]],
-      require => [File['/etc/apt/sources.list.d/postgres.list']]
+      require => $require,
     }
 
     class ubuntu {

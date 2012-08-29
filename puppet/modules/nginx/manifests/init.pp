@@ -50,10 +50,7 @@ class nginx {
       ensure => present,
       owner => root,
       group => root,
-      content => $operatingsystemrelease ? {
-        '10.04' => 'deb http://ppa.launchpad.net/brightbox/passenger-nginx/ubuntu lucid main',
-        '11.04' => 'deb http://ppa.launchpad.net/brightbox/passenger-nginx/ubuntu natty main',
-      },
+      content => "deb http://ppa.launchpad.net/brightbox/passenger-nginx/ubuntu ${lsbdistcodename} main",
       require => Exec["get-nginx-apt-key"],
     }
 
