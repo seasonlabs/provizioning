@@ -16,7 +16,10 @@ class postgres {
   include "postgres::$operatingsystem"
   $require = File['/etc/apt/sources.list.d/postgres.list']
 
-	package { ["postgresql-9.2"]: ensure => installed }
+	package { [postgresql]: 
+    ensure => installed,
+    name => 'postgresql-9.2'
+  }
 	package { [libpq-dev]: ensure => installed }
 
     service { "postgresql":
