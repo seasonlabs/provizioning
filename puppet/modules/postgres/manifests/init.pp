@@ -13,12 +13,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 class postgres {
-  if $operatingsystem == 'ubuntu' and $operatingsystemrelease < '12.04' {
-    include "postgres::$operatingsystem"
-    $require = File['/etc/apt/sources.list.d/postgres.list']
-  } else {
-    $require = []
-  }
+  include "postgres::$operatingsystem"
+  $require = File['/etc/apt/sources.list.d/postgres.list']
 
 	package { [postgresql]: ensure => installed }
 	package { [libpq-dev]: ensure => installed }
@@ -42,10 +38,7 @@ class postgres {
   			ensure => present,
   			owner => root,
   			group => root,
-  			content => $operatingsystemrelease ? {
-  				'10.04' => 'deb http://ppa.launchpad.net/pitti/postgresql/ubuntu lucid main',
-  				'11.04' => 'deb http://ppa.launchpad.net/pitti/postgresql/ubuntu natty main',
-  			},
+  			content => "deb http://ppa.launchpad.net/pitti/postgresql/ubuntu ${lsbdistcodename} main",
   			require => Exec["get-postgres-apt-key"],
   		}
 
