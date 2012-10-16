@@ -1,6 +1,6 @@
 server {
-  server_name  <% real_server_name.each do |s_n| -%><%= s_n %> <% end -%>;
-  access_log  <%= real_access_log %>;
+  server_name <% real_server_name.each do |s_n| -%><%= s_n %> <% end -%>;
+  access_log <%= real_access_log %>;
   error_log <%= real_error_log %>;
   root <%= root %>;
 

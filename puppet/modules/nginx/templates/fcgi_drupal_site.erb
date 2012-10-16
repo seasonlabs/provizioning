@@ -1,5 +1,5 @@
 server {
-    server_name <% real_server_name.each do |s_n| -%><%= s_n %> <% end -%>;
+    server_name <%= real_server_name.join(' ');
     access_log <%= real_access_log %>;
     error_log <%= real_error_log %>;
     root <%= root %>;
