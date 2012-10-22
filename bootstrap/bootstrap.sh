@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# ruby-stack - Install Ruby and friends.
-# Author: Francesc Esplugas <http://francescesplugas.com/>
+# Bootstrap an ubuntu server
+# Author: Victor Castell <http://francescesplugas.com/>
+# Based on work by: Francesc Esplugas <http://francescesplugas.com/>
 # License: MIT-LICENSE
 #
-# DON'T CHANGE THIS FILE UNLESS YOU KNOW WHAT YOU'RE DOING!
 
 ##############################################################################
 # Abort on any error.
@@ -26,18 +26,13 @@ then
 wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/lucid.sources.list -O sources.list
 fi
 
-if [ "$var" == "Ubuntu 11.04 \n \l" ]
-then
-wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/natty.sources.list -O sources.list
-fi
-
 if [ "$var" == "Ubuntu 12.04 \n \l" ]
 then
 wget https://raw.github.com/seasonlabs/provizioning/master/bootstrap/precise.sources.list -O sources.list
 fi
 
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
+apt-get -y update
 apt-get -y upgrade
 
 ##############################################################################
@@ -77,7 +72,10 @@ fi
 # Cleanup the installation
 apt-get -y autoremove
 
+##############################################################################
 # Install Puppet
+##############################################################################
+
 gem install puppet --no-ri --no-rdoc
 puppet resource group puppet ensure=present
 puppet resource user puppet ensure=present gid=puppet shell='/sbin/nologin'
