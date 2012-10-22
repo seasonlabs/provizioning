@@ -33,18 +33,19 @@ class nginx {
   if ! defined(Package['nginx']) { package { nginx: ensure => installed }}
 
   service { nginx:
-        ensure => running,
-        enable => true,
+    ensure => running,
+    enable => true,
     hasrestart => true,
     require => [File["/etc/nginx/nginx.conf"], File["/etc/apt/sources.list.d/nginx.list"]],
   }
 
   class ubuntu {
-      include apt
+    include apt
 
-      exec {"get-nginx-apt-key":
-          command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C3173AA6"
-        }
+    exec {"get-nginx-apt-key":
+      command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C3173AA6",
+      unless => "apt-key list | grep C3173AA6",
+    }
         
     file {"/etc/apt/sources.list.d/nginx.list":
       ensure => present,
@@ -57,10 +58,12 @@ class nginx {
     exec {"update apt to find nginx":
       command => "/usr/bin/apt-get -y update",
       require => File["/etc/apt/sources.list.d/nginx.list"],
+      subscribe => File["/etc/apt/sources.list.d/nginx.list"],
+      refreshonly => true,
     }
-    }
+  }
 
-    file { "/etc/nginx/nginx.conf":
+  file { "/etc/nginx/nginx.conf":
     ensure  => present,
     mode  => 644,
     owner   => root,
@@ -68,7 +71,7 @@ class nginx {
     content => template("nginx/nginx.conf.erb"),
     notify  => Exec["reload-nginx"],
     require => Package["nginx"],
-    }
+  }
 
   file { $nginx_conf:
     ensure => directory,
@@ -103,8 +106,8 @@ class nginx {
 
   exec { "reload-nginx":
     command => "/etc/init.d/nginx reload",
-        refreshonly => true,
-    }
+    refreshonly => true,
+  }
 
   # Define: nginx::config
   #

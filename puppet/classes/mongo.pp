@@ -28,7 +28,8 @@ class mongo {
       include apt
 
       exec {"get-10gen-apt-key":
-        command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10"
+        command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10",
+        unless => "apt-key list | grep 7F0CEB10",
       }
 
       file {"/etc/apt/sources.list.d/mongo.list":
@@ -48,7 +49,9 @@ class mongo {
 
       exec {"update apt to find mongodb":
         command => "/usr/bin/apt-get -y update",
-        require => File["/etc/apt/sources.list.d/mongo.list"]
+        subscribe => File["/etc/apt/sources.list.d/mongo.list"],
+        require => File["/etc/apt/sources.list.d/mongo.list"],
+        refreshonly => true,
       }
 
       package {"mongodb-10gen":
