@@ -25,8 +25,6 @@ class mongo {
     }
 
     class ubuntu {
-      include apt
-
       exec {"get-10gen-apt-key":
         command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10",
         unless => "apt-key list | grep 7F0CEB10",

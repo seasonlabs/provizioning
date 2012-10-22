@@ -31,8 +31,6 @@ class postgres {
     }
 
     class ubuntu {
-    	include apt
-		
   		exec {"get-postgres-apt-key":
         command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 8683D8A2"
       }
@@ -48,6 +46,8 @@ class postgres {
   		exec {"update apt to find postgres":
   			command => '/usr/bin/apt-get -y update',
   			require => File['/etc/apt/sources.list.d/postgres.list'],
+        subscribe => File['/etc/apt/sources.list.d/postgres.list'],
+        refreshonly => true,
   		}
     }
 }

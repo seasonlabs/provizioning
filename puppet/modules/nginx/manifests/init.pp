@@ -40,8 +40,6 @@ class nginx {
   }
 
   class ubuntu {
-    include apt
-
     exec {"get-nginx-apt-key":
       command => "apt-key adv --keyserver keyserver.ubuntu.com --recv C3173AA6",
       unless => "apt-key list | grep C3173AA6",
