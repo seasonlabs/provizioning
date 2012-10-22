@@ -1,11 +1,11 @@
-upstream <%= domain_name.sub(".", "_") %> {
+upstream <%= @domain_name.sub(".", "_") %> {
   server unix:/tmp/<%= application %>.sock fail_timeout=0;
 }
 
 server {
-  listen 80;
+  listen <% if @port %><%= @port %><% else %>80<% end %>;
   client_max_body_size 4G;
-  server_name <%= domain_name %> www.<%= domain_name %>;
+  server_name <%= @domain_name %><%= ' ' + @server_names.join(' ') if @server_names %>;
 
   keepalive_timeout 5;
 
