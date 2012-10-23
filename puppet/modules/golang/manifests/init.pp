@@ -1,4 +1,4 @@
-class go {
+class golang {
 	exec {"get-gophers-apt-key":
       command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 9AD198E9 ",
       unless => "apt-key list | grep 9AD198E9 ",
