@@ -19,7 +19,7 @@ class golang {
       refreshonly => true,
     }
 
-    package {"golang":
+    package {"golang-stable":
       ensure => latest,
       require =>  Exec["update apt to find golang"],
     }
