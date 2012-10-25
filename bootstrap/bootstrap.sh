@@ -77,6 +77,7 @@ apt-get -y autoremove
 ##############################################################################
 
 gem install puppet --no-ri --no-rdoc
-puppet resource group puppet ensure=present
+groupadd puppet
+#puppet resource group puppet ensure=present
 puppet resource user puppet ensure=present gid=puppet shell='/sbin/nologin'
 reboot
