@@ -11,6 +11,6 @@ Exec {
 }
 
 import "classes/*"
-include base, gemrc, logrotate, ufw
+include base, gemrc, logrotate
 
 import "roles/*"
