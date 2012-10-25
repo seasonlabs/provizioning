@@ -18,8 +18,7 @@ class apache {
   }
 
   user { $apache_user:
-    groups => application,
-    require => [Package[httpd], Class["base::application"]],
+    require => [Package[httpd]],
     notify => Service[httpd]
   }
 
