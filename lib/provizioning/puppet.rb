@@ -12,7 +12,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc "Deploy our puppet recipes to the server"
     task :deploy_recipes do
       with_puppet_user do
-        run "rm -rf #{puppet_path}"
+        run "#{try_sudo} rm -rf #{puppet_path}"
         upload File.expand_path("../../../puppet", __FILE__), puppet_path
       end
     end
@@ -35,7 +35,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc 'Bootstrap puppet'
     task :bootstrap do
       with_puppet_user do
-        run "wget -q -O - https://raw.github.com/seasonlabs/provizioning/master/bootstrap/bootstrap.sh | sh"
+        run "wget -q -O - https://raw.github.com/seasonlabs/provizioning/master/bootstrap/bootstrap.sh | #{try_sudo} sh"
       end
     end
 
@@ -70,7 +70,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     dryrun_option = fetch('puppet_dryrun') ? "--noop " : ""
     debug_option = fetch('puppet_debug') ? "-d " : ""
     with_puppet_user do
-      run "puppet apply --modulepath '#{puppet_app_modules_path}:#{puppet_path}/modules' --templatedir #{puppet_path}/classes #{dryrun_option}-v #{debug_option}#{manifest}", options
+      run "#{try_sudo} puppet apply --modulepath '#{puppet_app_modules_path}:#{puppet_path}/modules' --templatedir #{puppet_path}/classes #{dryrun_option}-v #{debug_option}#{manifest}", options
     end
   end
   
