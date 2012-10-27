@@ -56,14 +56,14 @@ class mysql {
 
     define db( $user, $password ) {
       exec { "create-${name}-db":
-        unless => "/usr/bin/mysql -uroot ${name}",
-        command => "/usr/bin/mysql -uroot -e \"create database ${name};\"",
+        unless => "/usr/bin/mysql --defaults-file=/root/.my.cnf -uroot ${name}",
+        command => "/usr/bin/mysql --defaults-file=/root/.my.cnf -uroot -e \"create database ${name};\"",
         require => Service[mysql-server],
       }
 
       exec { "grant-${name}-db":
-        unless => "/usr/bin/mysql -u${user} -p${password} ${name}",
-        command => "/usr/bin/mysql -uroot -e \"grant all on ${name}.* to ${user}@localhost identified by '$password';\"",
+        unless => "/usr/bin/mysql --defaults-file=/root/.my.cnf -u${user} -p${password} ${name}",
+        command => "/usr/bin/mysql --defaults-file=/root/.my.cnf -uroot -e \"grant all on ${name}.* to ${user}@localhost identified by '$password';\"",
         require => [Service[mysql-server], Exec["create-${name}-db"]]
       }
     }
