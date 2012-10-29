@@ -41,6 +41,10 @@ class mysql {
       enable => true
     }
 
+    file {"/etc/mysql/conf.d/my.cnf":
+      content => "[mysqld]\ndefault-character-set=utf8",
+    }
+
     exec { "Initialize MySQL server root password":
       unless      => "/usr/bin/test -f /root/.my.cnf",
       command     => "/usr/bin/mysqladmin -uroot password ${mysql_password}",
