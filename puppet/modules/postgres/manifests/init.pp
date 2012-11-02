@@ -32,7 +32,8 @@ class postgres {
 
     class ubuntu {
   		exec {"get-postgres-apt-key":
-        command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 8683D8A2"
+        command => "apt-key adv --keyserver keyserver.ubuntu.com --recv 8683D8A2",
+        unless => "apt-key list | grep 8683D8A2",
       }
 
   		file {"/etc/apt/sources.list.d/postgres.list":

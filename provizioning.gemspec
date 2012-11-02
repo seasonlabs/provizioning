@@ -17,4 +17,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency(%q<capistrano>, [">= 0"])
   gem.add_dependency(%q<capistrano-ext>, [">= 0"])
+
+  gem.post_install_message = "This gem is being deprecated, all modules and classes are\n
+  left for legacy support.\n
+  Please use http://github.com/seasonlabs/"
 end
