@@ -13,6 +13,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     task :deploy_recipes do
       with_puppet_user do
         run "#{try_sudo} rm -rf #{puppet_path}"
+        run "mkdir -p #{puppet_path}"
         upload File.expand_path("../../../puppet", __FILE__), puppet_path
       end
     end
@@ -44,6 +45,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       deploy_recipes
       with_puppet_user do
         if File.directory?("config/puppet")
+          run "mkdir -p #{puppet_app_modules_path}"
           upload File.expand_path("config/puppet"), puppet_app_modules_path
         end
       end
